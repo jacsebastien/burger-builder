@@ -12,6 +12,7 @@ const controls = [
 
 const BuildControls = (props) => (
     <section className={styles.buildControls}>
+        <p>Current Price: <span className={styles.price}>{props.price.toFixed(2)}</span></p>
         {controls.map(ctrl => (
             <BuildControl
                 key={ctrl.label}
