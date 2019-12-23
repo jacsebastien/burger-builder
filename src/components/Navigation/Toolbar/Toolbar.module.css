@@ -16,3 +16,14 @@
 .toolbar nav {
     height: 100%;
 }
+
+.logo {
+    height: 80%;
+}
+
+
+@media screen and (max-width: 499px) {
+    .toolbar nav {
+        display: none;
+    }
+}
