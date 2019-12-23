@@ -24,19 +24,20 @@ module.exports = {
     ],
     'rules': {
         'indent': [
-            'error',
+            'warn',
             4
         ],
         'quotes': [
-            'error',
+            'warn',
             'single'
         ],
         'semi': [
-            'error',
+            'warn',
             'always'
         ],
         'linebreak-style': 'off',
         'react/no-unescaped-entities': 'off',
-        'react/prop-types': 'off'
+        'react/prop-types': 'off',
+        "no-unused-vars": "warn"
     }
 };
