@@ -11,8 +11,8 @@ const CheckoutSummary = (props) => {
             <section className={styles.burgerBlock}>
                 <Burger ingredients={props.ingredients}/>
             </section>
-            <Button btnType="danger" clicked>CANCEL</Button>
-            <Button btnType="success" clicked>CONTINUE</Button>
+            <Button btnType="danger">CANCEL</Button>
+            <Button btnType="success">CONTINUE</Button>
         </div>
     );
 };
