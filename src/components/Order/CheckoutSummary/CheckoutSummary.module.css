@@ -1,0 +1,16 @@
+.checkoutSummary {
+    text-align: center;
+    width: 80%;
+    margin: auto;
+}
+
+.burgerBlock {
+    width: 100%;
+    margin: auto;
+}
+
+@media screen and (min-width: 600px) {
+    .checkoutSummary {
+        width: 500px;
+    }
+}
