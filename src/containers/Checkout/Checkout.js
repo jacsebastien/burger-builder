@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 
-const Checkout = () => {
+const Checkout = (props) => {
     const [state, setState] = useState({
         ingredients: {
             salad: 1,
@@ -12,9 +12,21 @@ const Checkout = () => {
         }
     });
 
+    const checkoutCancelledHandler = () => {
+        props.history.goBack();
+    };
+
+    const checkoutContinuedHandler = () => {
+        props.history.replace('/checkout/contact-data');
+    };
+
     return (
         <div>
-            <CheckoutSummary ingredients={state.ingredients}/>
+            <CheckoutSummary
+                ingredients={state.ingredients}
+                checkoutCancelled={checkoutCancelledHandler}
+                checkoutContinued={checkoutContinuedHandler}
+            />
         </div>
     );
 };
