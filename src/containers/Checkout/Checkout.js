@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Route } from 'react-router-dom';
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
+import ContactData from './ContactData/ContactData';
 
 const Checkout = (props) => {
     const [ingredientsState, setIngredientsState] = useState({
@@ -37,6 +39,8 @@ const Checkout = (props) => {
                 checkoutCancelled={checkoutCancelledHandler}
                 checkoutContinued={checkoutContinuedHandler}
             />
+            {/* Load ContactData component under summary only when we go to contact-data route */}
+            <Route path={`${props.match.path}/contact-data`} component={ContactData}/>
         </div>
     );
 };
