@@ -5,6 +5,7 @@ import Axios from '../../../axios-orders';
 import styles from './ContactData.module.css';
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
+import Input from '../../../components/UI/Input/Input';
 
 const ContactData = (props) => {
     const [state, setState] = useState({
@@ -51,17 +52,10 @@ const ContactData = (props) => {
 
     let form = (
         <form>
-            <label>Name</label>
-            <input type="text" name="name" />
-
-            <label>Email</label>
-            <input type="email" name="email" />
-
-            <label>Street</label>
-            <input type="text" name="street" />
-
-            <label>Postal Code</label>
-            <input type="text" name="postalCode" />
+            <Input inputtype="input" type="text" name="name" label="Name"/>
+            <Input inputtype="input" type="email" name="email" label="Email"/>
+            <Input inputtype="input" type="text" name="street" label="Street"/>
+            <Input inputtype="input" type="text" name="postalCode" label="Postal Code"/>
 
             <section>
                 <Button btnType="success" clicked={orderHandler}>ORDER</Button>
