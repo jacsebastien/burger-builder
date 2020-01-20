@@ -28,8 +28,7 @@ const Orders = (props) => {
 
     return (
         <div>
-            <Order />
-            <Order />
+            {ordersState.map(order => <Order key={order.id} ingredients={order.ingredients} price={order.price} />)}
         </div>
     );
 };
