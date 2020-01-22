@@ -85,6 +85,21 @@ const ContactData = (props) => {
             });
     };
 
+    const inputChangedHandler = (event, inputIdentifier) => {
+        const updatedForm = {
+            ...formState
+        };
+        // Deeply clone state elements
+        const updatedFormElement = {
+            ...updatedForm[inputIdentifier]
+        };
+        updatedFormElement.value = event.target.value;
+        updatedForm[inputIdentifier] = updatedFormElement;
+
+        setFormState(updatedForm);
+    };
+
+    // RENDER //
     const formElementsArray = Object.keys(formState)
         .map(key => {
             return {
@@ -101,7 +116,8 @@ const ContactData = (props) => {
                     key={element.id}
                     elementType={element.elementType}
                     elementConfig={element.elementConfig}
-                    value={element.value} />
+                    value={element.value}
+                    changed={(event) => inputChangedHandler(event, element.id)} />
             ))}
 
             <section>

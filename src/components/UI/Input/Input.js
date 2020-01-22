@@ -11,12 +11,15 @@ const Input = (props) => {
             formElement = <textarea
                 className={styles.formElement}
                 value={props.value}
+                onChange={props.changed}
                 {...props.elementConfig} />;
             break;
         case 'select':
             formElement = (
-                <select className={styles.formElement}
-                    value={props.value}>
+                <select
+                    className={styles.formElement}
+                    value={props.value}
+                    onChange={props.changed}>
                     {props.elementConfig.options
                         .map((option, i) => (
                             <option key={i} value={option.value}>{option.display}</option>
@@ -30,6 +33,7 @@ const Input = (props) => {
             formElement = <input
                 className={styles.formElement}
                 value={props.value}
+                onChange={props.changed}
                 {...props.elementConfig} />;
     }
 
