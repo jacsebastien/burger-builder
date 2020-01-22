@@ -5,11 +5,16 @@ import styles from './Input.module.css';
 
 const Input = (props) => {
     let formElement = null;
+    const inputStyles = [styles.formElement];
+
+    if(props.invalid && props.shouldValidate && props.touched) {
+        inputStyles.push(styles.invalid);
+    }
 
     switch (props.elementType) {
         case 'textarea':
             formElement = <textarea
-                className={styles.formElement}
+                className={inputStyles.join(' ')}
                 value={props.value}
                 onChange={props.changed}
                 {...props.elementConfig} />;
@@ -17,7 +22,7 @@ const Input = (props) => {
         case 'select':
             formElement = (
                 <select
-                    className={styles.formElement}
+                    className={inputStyles.join(' ')}
                     value={props.value}
                     onChange={props.changed}>
                     {props.elementConfig.options
@@ -31,7 +36,7 @@ const Input = (props) => {
         case 'input':
         default:
             formElement = <input
-                className={styles.formElement}
+                className={inputStyles.join(' ')}
                 value={props.value}
                 onChange={props.changed}
                 {...props.elementConfig} />;

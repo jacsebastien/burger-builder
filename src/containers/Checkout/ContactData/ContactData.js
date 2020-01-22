@@ -19,7 +19,8 @@ const ContactData = (props) => {
             validation: {
                 required: true
             },
-            valid: false
+            valid: false,
+            touched: false
         },
         street: {
             elementType: 'input',
@@ -31,7 +32,8 @@ const ContactData = (props) => {
             validation: {
                 required: true
             },
-            valid: false
+            valid: false,
+            touched: false
         },
         zipCode: {
             elementType: 'input',
@@ -43,9 +45,10 @@ const ContactData = (props) => {
             validation: {
                 required: true,
                 minLength: 4,
-                maxLength:6
+                maxLength: 5
             },
-            valid: false
+            valid: false,
+            touched: false
         },
         country: {
             elementType: 'input',
@@ -57,7 +60,8 @@ const ContactData = (props) => {
             validation: {
                 required: true
             },
-            valid: false
+            valid: false,
+            touched: false
         },
         email: {
             elementType: 'input',
@@ -69,7 +73,8 @@ const ContactData = (props) => {
             validation: {
                 required: true
             },
-            valid: false
+            valid: false,
+            touched: false
         },
         deliveryMethod: {
             elementType: 'select',
@@ -140,6 +145,7 @@ const ContactData = (props) => {
         };
         updatedFormElement.value = event.target.value;
         updatedFormElement.valid = checkValidity(updatedFormElement.value, updatedFormElement.validation);
+        updatedFormElement.touched = true;
         updatedForm[inputIdentifier] = updatedFormElement;
         console.log(updatedFormElement);
         setFormState(updatedForm);
@@ -163,6 +169,9 @@ const ContactData = (props) => {
                     elementType={element.elementType}
                     elementConfig={element.elementConfig}
                     value={element.value}
+                    invalid={!element.valid}
+                    shouldValidate={element.validation}
+                    touched={element.touched}
                     changed={(event) => inputChangedHandler(event, element.id)} />
             ))}
 

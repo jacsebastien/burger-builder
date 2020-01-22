@@ -23,5 +23,10 @@
 
 .formElement:focus {
     outline: none;
-    background-color: #ccc;
+    background-color: #eee;
+}
+
+.invalid {
+    border: 1px solid red;
+    background-color: #FDA49A;
 }
