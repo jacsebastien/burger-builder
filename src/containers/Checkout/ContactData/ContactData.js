@@ -15,7 +15,11 @@ const ContactData = (props) => {
                 type: 'text',
                 label: 'Name'
             },
-            value: ''
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false
         },
         street: {
             elementType: 'input',
@@ -23,7 +27,11 @@ const ContactData = (props) => {
                 type: 'text',
                 label: 'Street'
             },
-            value: ''
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false
         },
         zipCode: {
             elementType: 'input',
@@ -31,7 +39,13 @@ const ContactData = (props) => {
                 type: 'text',
                 label: 'ZIP Code'
             },
-            value: ''
+            value: '',
+            validation: {
+                required: true,
+                minLength: 4,
+                maxLength:6
+            },
+            valid: false
         },
         country: {
             elementType: 'input',
@@ -39,7 +53,11 @@ const ContactData = (props) => {
                 type: 'text',
                 label: 'Country'
             },
-            value: ''
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false
         },
         email: {
             elementType: 'input',
@@ -47,7 +65,11 @@ const ContactData = (props) => {
                 type: 'email',
                 label: 'Email'
             },
-            value: ''
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false
         },
         deliveryMethod: {
             elementType: 'select',
@@ -92,6 +114,22 @@ const ContactData = (props) => {
             });
     };
 
+    const checkValidity = (value, rules) => {
+        let isValid = true;
+
+        if(rules.required) {
+            isValid = value.trim() !== '' && isValid;
+        }
+        if(rules.minLength) {
+            isValid = value.length >= rules.minLength && isValid;
+        }
+        if(rules.maxLength) {
+            isValid = value.length <= rules.maxLength && isValid;
+        }
+
+        return isValid;
+    };
+
     const inputChangedHandler = (event, inputIdentifier) => {
         const updatedForm = {
             ...formState
@@ -101,8 +139,9 @@ const ContactData = (props) => {
             ...updatedForm[inputIdentifier]
         };
         updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedForm[inputIdentifier] = updatedFormElement;
-
+        console.log(updatedFormElement);
         setFormState(updatedForm);
     };
 
