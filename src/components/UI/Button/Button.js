@@ -3,7 +3,9 @@ import React from 'react';
 import styles from './Button.module.css';
 
 const Button = (props) => (
-    <button className={[styles.button, styles[props.btnType]].join(' ')}
+    <button
+        type={props.type || 'button'}
+        className={[styles.button, styles[props.btnType]].join(' ')}
         onClick={props.clicked}>{props.children}</button>
 );
 

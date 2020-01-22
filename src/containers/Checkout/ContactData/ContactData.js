@@ -70,9 +70,16 @@ const ContactData = (props) => {
 
         setLoading(true);
 
+        const formData = {};
+
+        for(let key in formState) {
+            formData[key] = formState[key].value;
+        }
+
         const order = {
             ingredients: props.ingredients,
             price: props.totalPrice,
+            orderData: formData
         };
 
         Axios.post('orders.json', order)
@@ -109,7 +116,7 @@ const ContactData = (props) => {
         });
 
     let form = (
-        <form>
+        <form onSubmit={orderHandler}>
             {/* <Input inputtype="input" type="text" name="name" label="Name" /> */}
             {formElementsArray.map(element => (
                 <Input
@@ -121,7 +128,7 @@ const ContactData = (props) => {
             ))}
 
             <section>
-                <Button btnType="success" clicked={orderHandler}>ORDER</Button>
+                <Button type="submit" btnType="success">ORDER</Button>
             </section>
         </form>
     );
