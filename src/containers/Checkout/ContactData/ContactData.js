@@ -85,9 +85,14 @@ const ContactData = (props) => {
                 ],
                 label: 'Delivery Method'
             },
-            value: ''
+            value: 'fastest',
+            validation: {},
+            valid: true,
+            touched: false
         }
     });
+
+    const [formIsValidState, setFormValidity] = useState(false);
 
     const [loadingState, setLoading] = useState(false);
 
@@ -99,7 +104,7 @@ const ContactData = (props) => {
 
         const formData = {};
 
-        for(let key in formState) {
+        for (let key in formState) {
             formData[key] = formState[key].value;
         }
 
@@ -122,13 +127,13 @@ const ContactData = (props) => {
     const checkValidity = (value, rules) => {
         let isValid = true;
 
-        if(rules.required) {
+        if (rules.required) {
             isValid = value.trim() !== '' && isValid;
         }
-        if(rules.minLength) {
+        if (rules.minLength) {
             isValid = value.length >= rules.minLength && isValid;
         }
-        if(rules.maxLength) {
+        if (rules.maxLength) {
             isValid = value.length <= rules.maxLength && isValid;
         }
 
@@ -136,19 +141,21 @@ const ContactData = (props) => {
     };
 
     const inputChangedHandler = (event, inputIdentifier) => {
-        const updatedForm = {
-            ...formState
-        };
+        const updatedForm = { ...formState };
         // Deeply clone state elements
-        const updatedFormElement = {
-            ...updatedForm[inputIdentifier]
-        };
+        const updatedFormElement = { ...updatedForm[inputIdentifier] };
+
         updatedFormElement.value = event.target.value;
         updatedFormElement.valid = checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.touched = true;
         updatedForm[inputIdentifier] = updatedFormElement;
-        console.log(updatedFormElement);
+
+        const formIsValid = Object.keys(updatedForm).reduce((isValid, key) => {
+            return isValid && updatedForm[key].valid;
+        }, true);
+
         setFormState(updatedForm);
+        setFormValidity(formIsValid);
     };
 
     // RENDER //
@@ -176,7 +183,7 @@ const ContactData = (props) => {
             ))}
 
             <section>
-                <Button type="submit" btnType="success">ORDER</Button>
+                <Button type="submit" btnType="success" disabled={!formIsValidState}>ORDER</Button>
             </section>
         </form>
     );
