@@ -8,12 +8,57 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 
 const ContactData = (props) => {
-    const [state, setState] = useState({
-        name: '',
-        email: '',
-        address: {
-            street: '',
-            postalCode: ''
+    const [formState, setFormState] = useState({
+        name: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Name'
+            },
+            value: ''
+        },
+        street: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Street'
+            },
+            value: ''
+        },
+        zipCode: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'ZIP Code'
+            },
+            value: ''
+        },
+        country: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'text',
+                label: 'Country'
+            },
+            value: ''
+        },
+        email: {
+            elementType: 'input',
+            elementConfig: {
+                type: 'email',
+                label: 'Email'
+            },
+            value: ''
+        },
+        deliveryMethod: {
+            elementType: 'select',
+            elementConfig: {
+                options: [
+                    { value: 'fastest', display: 'Fastest' },
+                    { value: 'cheapest', display: 'Cheapest' }
+                ],
+                label: 'Delivery Method'
+            },
+            value: ''
         }
     });
 
@@ -28,16 +73,6 @@ const ContactData = (props) => {
         const order = {
             ingredients: props.ingredients,
             price: props.totalPrice,
-            customer: {
-                name: 'Seb',
-                address: {
-                    street: 'Test street 4',
-                    zipCode: '5468',
-                    country: 'Belgium'
-                },
-                email: 'test@test.com',
-            },
-            deliveryMethod: 'fastest'
         };
 
         Axios.post('orders.json', order)
@@ -50,12 +85,24 @@ const ContactData = (props) => {
             });
     };
 
+    const formElementsArray = Object.keys(formState)
+        .map(key => {
+            return {
+                ...formState[key],
+                id: key
+            };
+        });
+
     let form = (
         <form>
-            <Input inputtype="input" type="text" name="name" label="Name"/>
-            <Input inputtype="input" type="email" name="email" label="Email"/>
-            <Input inputtype="input" type="text" name="street" label="Street"/>
-            <Input inputtype="input" type="text" name="postalCode" label="Postal Code"/>
+            {/* <Input inputtype="input" type="text" name="name" label="Name" /> */}
+            {formElementsArray.map(element => (
+                <Input
+                    key={element.id}
+                    elementType={element.elementType}
+                    elementConfig={element.elementConfig}
+                    value={element.value} />
+            ))}
 
             <section>
                 <Button btnType="success" clicked={orderHandler}>ORDER</Button>

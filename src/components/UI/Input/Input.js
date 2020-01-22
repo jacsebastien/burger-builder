@@ -6,18 +6,24 @@ import styles from './Input.module.css';
 const Input = (props) => {
     let formElement = null;
 
-    switch (props.inputtype) {
+    switch (props.elementType) {
         case 'textarea':
-            formElement = <textarea className={styles.formElement} {...props} />;
+            formElement = <textarea
+                className={styles.formElement}
+                value={props.value}
+                {...props.elementConfig} />;
             break;
         case 'input':
         default:
-            formElement = <input className={styles.formElement} {...props} />;
+            formElement = <input
+                className={styles.formElement}
+                value={props.value}
+                {...props.elementConfig} />;
     }
 
     return (
         <div className={styles.input}>
-            <label className={styles.label}>{props.label}</label>
+            <label className={styles.label}>{props.elementConfig.label}</label>
             {formElement}
         </div>
     );
