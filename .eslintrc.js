@@ -1,7 +1,8 @@
 module.exports = {
     'env': {
         'browser': true,
-        'es6': true
+        'es6': true,
+        "amd": true
     },
     'extends': [
         'eslint:recommended',
@@ -25,19 +26,26 @@ module.exports = {
     'rules': {
         'indent': [
             'warn',
-            4
+            4,
+            { "SwitchCase": 1 }
+        ],
+        'linebreak-style': [
+            'error',
+            'unix'
         ],
         'quotes': [
-            'warn',
+            'error',
             'single'
         ],
         'semi': [
-            'warn',
+            'error',
             'always'
         ],
+        'no-console': 'off',
         'linebreak-style': 'off',
         'react/no-unescaped-entities': 'off',
         'react/prop-types': 'off',
-        "no-unused-vars": "warn"
+        'react/display-name': 'off',
+        'no-unused-vars': 'warn'
     }
 };
