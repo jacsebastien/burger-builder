@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Axios from '../../../axios-orders';
 import styles from './ContactData.module.css';
@@ -200,4 +201,11 @@ const ContactData = (props) => {
     );
 };
 
-export default withRouter(ContactData);
+const mapStateToProps = state => {
+    return {
+        ingredients: state.ingredients,
+        totalPrice: state.totalPrice
+    };
+};
+
+export default connect(mapStateToProps)(ContactData);
