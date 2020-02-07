@@ -1,4 +1,4 @@
-import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../actions/actionTypes';
+import { ADD_INGREDIENT, REMOVE_INGREDIENT, SET_INGREDIENTS, FETCH_FAILED } from '../actions/actionTypes';
 
 const initialState = {
     ingredients: null,
@@ -32,6 +32,17 @@ const reducer = (state = initialState, action) => {
                     [action.name]: state.ingredients[action.name] - 1
                 },
                 totalPrice: state.totalPrice - PRICES[action.name]
+            };
+        case SET_INGREDIENTS:
+            return {
+                ...state,
+                ingredients: action.ingredients,
+                isError: false
+            };
+        case FETCH_FAILED:
+            return {
+                ...state,
+                isError: true
             };
         default:
             return state;
