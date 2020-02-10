@@ -115,14 +115,7 @@ const ContactData = (props) => {
             orderData: formData
         };
 
-        Axios.post('orders.json', order)
-            .then(() => {
-                setLoading(false);
-                props.history.push('/');
-            })
-            .catch(() => {
-                setLoading(false);
-            });
+
     };
 
     const checkValidity = (value, rules) => {
