@@ -13,38 +13,51 @@ const PRICES = {
     bacon: 0.7
 };
 
+const addIngredient = (state, action) => {
+    return {
+        ...state,
+        ingredients: {
+            ...state.ingredients,
+            [action.name]: state.ingredients[action.name] + 1
+        },
+        totalPrice: state.totalPrice + PRICES[action.name]
+    };
+};
+const removeIngredient = (state, action) => {
+    return {
+        ...state,
+        ingredients: {
+            ...state.ingredients,
+            [action.name]: state.ingredients[action.name] - 1
+        },
+        totalPrice: state.totalPrice - PRICES[action.name]
+    };
+};
+const setIngredients = (state, action) => {
+    return {
+        ...state,
+        ingredients: action.ingredients,
+        totalPrice: initialState.totalPrice,
+        isError: false
+    };
+};
+const fetchFailed = state => {
+    return {
+        ...state,
+        isError: true
+    };
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_INGREDIENT:
-            return {
-                ...state,
-                ingredients: {
-                    ...state.ingredients,
-                    [action.name]: state.ingredients[action.name] + 1
-                },
-                totalPrice: state.totalPrice + PRICES[action.name]
-            };
+            return addIngredient(state, action);
         case REMOVE_INGREDIENT:
-            return {
-                ...state,
-                ingredients: {
-                    ...state.ingredients,
-                    [action.name]: state.ingredients[action.name] - 1
-                },
-                totalPrice: state.totalPrice - PRICES[action.name]
-            };
+            return removeIngredient(state, action);
         case SET_INGREDIENTS:
-            return {
-                ...state,
-                ingredients: action.ingredients,
-                totalPrice: initialState.totalPrice,
-                isError: false
-            };
+            return setIngredients(state, action);
         case FETCH_FAILED:
-            return {
-                ...state,
-                isError: true
-            };
+            return fetchFailed(state);
         default:
             return state;
     }
