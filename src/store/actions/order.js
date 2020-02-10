@@ -27,7 +27,7 @@ export const purchase = orderData => {
         dispatch(purchaseStart());
         Axios.post('orders.json', orderData)
             .then(response => {
-                dispatch(purchaseSuccess(response.data, orderData));
+                dispatch(purchaseSuccess(response.data.name, orderData));
             })
             .catch(error => {
                 dispatch(purchaseFailed(error));

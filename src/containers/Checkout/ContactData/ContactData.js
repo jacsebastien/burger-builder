@@ -193,9 +193,9 @@ const ContactData = (props) => {
 
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients,
-        totalPrice: state.totalPrice,
-        isLoading: state.loading
+        ingredients: state.burgerBuilder.ingredients,
+        totalPrice: state.burgerBuilder.totalPrice,
+        isLoading: state.order.loading
     };
 };
 
