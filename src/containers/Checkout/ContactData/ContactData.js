@@ -96,8 +96,6 @@ const ContactData = (props) => {
 
     const [formIsValidState, setFormValidity] = useState(false);
 
-    const [loadingState, setLoading] = useState(false);
-
     const orderHandler = (event) => {
         // Avoid page reloading when clicking on the button inside form tag
         event.preventDefault();
@@ -181,7 +179,7 @@ const ContactData = (props) => {
         </form>
     );
 
-    if (loadingState) {
+    if (props.isLoading) {
         form = <Spinner />;
     }
 
@@ -196,14 +194,15 @@ const ContactData = (props) => {
 const mapStateToProps = state => {
     return {
         ingredients: state.ingredients,
-        totalPrice: state.totalPrice
+        totalPrice: state.totalPrice,
+        isLoading: state.loading
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onOrderBurger: (orderData) => dispatch(actions.purchaseStart(orderData))
+        onOrderBurger: (orderData) => dispatch(actions.purchase(orderData))
     };
 };
 
-export default connect(mapStateToProps)(withErrorHandler(ContactData, Axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, Axios));

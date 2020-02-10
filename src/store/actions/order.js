@@ -16,8 +16,15 @@ export const purchaseFailed = error => {
     };
 };
 
-export const purchaseStart = orderData => {
+export const purchaseStart = () => {
+    return {
+        type: actionTypes.PURCHASE_START
+    };
+};
+
+export const purchase = orderData => {
     return dispatch => {
+        dispatch(purchaseStart());
         Axios.post('orders.json', orderData)
             .then(response => {
                 dispatch(purchaseSuccess(response.data, orderData));
