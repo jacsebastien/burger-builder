@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Axios from '../../../axios-orders';
@@ -7,6 +6,8 @@ import styles from './ContactData.module.css';
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import * as actions from '../../../store/actions';
 
 const ContactData = (props) => {
     const [formState, setFormState] = useState({
@@ -101,8 +102,6 @@ const ContactData = (props) => {
         // Avoid page reloading when clicking on the button inside form tag
         event.preventDefault();
 
-        setLoading(true);
-
         const formData = {};
 
         for (let key in formState) {
@@ -115,7 +114,7 @@ const ContactData = (props) => {
             orderData: formData
         };
 
-
+        props.onOrderBurger(order);
     };
 
     const checkValidity = (value, rules) => {
@@ -201,4 +200,10 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => {
+    return {
+        onOrderBurger: (orderData) => dispatch(actions.purchaseStart(orderData))
+    };
+};
+
+export default connect(mapStateToProps)(withErrorHandler(ContactData, Axios));
