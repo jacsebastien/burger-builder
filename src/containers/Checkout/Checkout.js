@@ -16,10 +16,12 @@ const Checkout = (props) => {
 
 
     let summary = <Redirect to='/' />;
-
     if (props.ingredients) {
+        const purchasedRedirect = props.purchased ? <Redirect to="/"/> : null;
+
         summary = (
             <div>
+                {purchasedRedirect}
                 <CheckoutSummary
                     ingredients={props.ingredients}
                     checkoutCancelled={checkoutCancelledHandler}
@@ -38,7 +40,8 @@ const Checkout = (props) => {
 
 const mapStateToProps = state => {
     return {
-        ingredients: state.burgerBuilder.ingredients
+        ingredients: state.burgerBuilder.ingredients,
+        purchased: state.order.purchased
     };
 };
 
