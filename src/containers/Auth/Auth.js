@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import styles from './Auth.module.css';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
-
+import * as actions from '../../store/actions';
+import { connect } from 'react-redux';
 
 const Auth = props => {
     const [formState, setFormState] = useState({
@@ -67,6 +68,11 @@ const Auth = props => {
         setFormState(updatedForm);
     };
 
+    const submitHandler = (event) => {
+        event.preventDefault();
+        props.onAuth(formState.email.value, formState.password.value);
+    };
+
     // RENDER //
     const formElementsArray = Object.keys(formState)
         .map(key => {
@@ -90,7 +96,7 @@ const Auth = props => {
 
     return (
         <div className={styles.authContainer}>
-            <form>
+            <form onSubmit={submitHandler}>
                 {inputs}
                 <section>
                     <Button type="submit" btnType="success">SUBMIT</Button>
@@ -100,4 +106,10 @@ const Auth = props => {
     );
 };
 
-export default Auth;
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth: (email, password) => dispatch(actions.auth(email, password))
+    };
+};
+
+export default connect(null, mapDispatchToProps)(Auth);
