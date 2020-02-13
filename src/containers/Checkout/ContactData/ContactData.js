@@ -112,7 +112,7 @@ const ContactData = (props) => {
             orderData: formData
         };
 
-        props.onOrderBurger(order);
+        props.onOrderBurger(order, props.token);
     };
 
     const checkValidity = (value, rules) => {
@@ -195,13 +195,14 @@ const mapStateToProps = state => {
     return {
         ingredients: state.burgerBuilder.ingredients,
         totalPrice: state.burgerBuilder.totalPrice,
-        isLoading: state.order.loading
+        isLoading: state.order.loading,
+        token: state.auth.token
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onOrderBurger: (orderData) => dispatch(actions.purchase(orderData))
+        onOrderBurger: (orderData, token) => dispatch(actions.purchase(orderData, token))
     };
 };
 
