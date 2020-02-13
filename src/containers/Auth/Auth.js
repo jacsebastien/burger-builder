@@ -37,6 +37,7 @@ const Auth = props => {
             touched: false
         }
     });
+    const [isSignup, setSignupState] = useState(false);
 
     const checkValidity = (value, rules) => {
         let isValid = true;
@@ -70,7 +71,11 @@ const Auth = props => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        props.onAuth(formState.email.value, formState.password.value);
+        props.onAuth(formState.email.value, formState.password.value, isSignup);
+    };
+
+    const switchAuthModeHandler = () => {
+        setSignupState(prevState => !prevState);
     };
 
     // RENDER //
@@ -96,19 +101,23 @@ const Auth = props => {
 
     return (
         <div className={styles.authContainer}>
+            <h1>{isSignup ? 'SIGNUP' : 'SIGNIN'}</h1>
             <form onSubmit={submitHandler}>
                 {inputs}
                 <section>
                     <Button type="submit" btnType="success">SUBMIT</Button>
                 </section>
             </form>
+            <Button
+                clicked={switchAuthModeHandler}
+                btnType="danger">SWITCH TO {isSignup ? 'SIGNIN' : 'SIGNUP'}</Button>
         </div>
     );
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password) => dispatch(actions.auth(email, password))
+        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup))
     };
 };
 

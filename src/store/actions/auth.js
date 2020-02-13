@@ -13,12 +13,15 @@ export const authFailed = (error) => {
     return { type: actionTypes.AUTH_FAILED, error: error };
 };
 
-export const auth = (email, password) => {
+export const auth = (email, password, isSignup) => {
     return dispatch => {
         dispatch(authStart());
         const authData = { email, password, returnSecureToken: true };
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:';
+        url += isSignup ? 'signUp' : 'signInWithPassword';
+
         Axios.post(
-            'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBFmcqepd9LaAPI5KRTdz0vk4c3c9aY_ao',
+            `${url}?key=AIzaSyBFmcqepd9LaAPI5KRTdz0vk4c3c9aY_ao`,
             authData
         ).then(response => {
             console.log(response);
