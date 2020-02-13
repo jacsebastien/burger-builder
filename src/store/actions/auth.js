@@ -30,8 +30,7 @@ export const auth = (email, password, isSignup) => {
         ).then(response => {
             dispatch(authSuccess(response.data.idToken, response.data.localId));
         }).catch(error => {
-            console.log(error);
-            dispatch(authFailed(error));
+            dispatch(authFailed(error.response.data.error));
         });
     };
 };
