@@ -6,6 +6,7 @@ import Input from '../../components/UI/Input/Input';
 import * as actions from '../../store/actions';
 import { connect } from 'react-redux';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import { Redirect } from 'react-router-dom';
 
 const Auth = props => {
     const [formState, setFormState] = useState({
@@ -104,6 +105,7 @@ const Auth = props => {
 
     return (
         <div className={styles.authContainer}>
+            {props.isAuth ? <Redirect to='/' /> : null}
             <h1>{isSignup ? 'SIGNUP' : 'SIGNIN'}</h1>
             {errorMessage}
             <form onSubmit={submitHandler}>
@@ -122,7 +124,8 @@ const Auth = props => {
 const mapStateToProps = state => {
     return {
         isLoading: state.auth.loading,
-        error: state.auth.error
+        error: state.auth.error,
+        isAuth: !!state.auth.token
     };
 };
 
