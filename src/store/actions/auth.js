@@ -5,8 +5,12 @@ export const authStart = () => {
     return { type: actionTypes.AUTH_START };
 };
 
-export const authSuccess = (authData) => {
-    return { type: actionTypes.AUTH_SUCCESS, authData: authData };
+export const authSuccess = (token, userId) => {
+    return {
+        type: actionTypes.AUTH_SUCCESS,
+        token: token,
+        userId: userId
+    };
 };
 
 export const authFailed = (error) => {
@@ -24,8 +28,7 @@ export const auth = (email, password, isSignup) => {
             `${url}?key=AIzaSyBFmcqepd9LaAPI5KRTdz0vk4c3c9aY_ao`,
             authData
         ).then(response => {
-            console.log(response);
-            dispatch(authSuccess(response.data));
+            dispatch(authSuccess(response.data.idToken, response.data.localId));
         }).catch(error => {
             console.log(error);
             dispatch(authFailed(error));
