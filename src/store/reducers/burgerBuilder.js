@@ -3,7 +3,8 @@ import { ADD_INGREDIENT, REMOVE_INGREDIENT, SET_INGREDIENTS, FETCH_FAILED } from
 const initialState = {
     ingredients: null,
     totalPrice: 4,
-    isError: false
+    isError: false,
+    building: false
 };
 
 const PRICES = {
@@ -20,7 +21,8 @@ const addIngredient = (state, action) => {
             ...state.ingredients,
             [action.name]: state.ingredients[action.name] + 1
         },
-        totalPrice: state.totalPrice + PRICES[action.name]
+        totalPrice: state.totalPrice + PRICES[action.name],
+        building: true
     };
 };
 const removeIngredient = (state, action) => {
@@ -30,7 +32,8 @@ const removeIngredient = (state, action) => {
             ...state.ingredients,
             [action.name]: state.ingredients[action.name] - 1
         },
-        totalPrice: state.totalPrice - PRICES[action.name]
+        totalPrice: state.totalPrice - PRICES[action.name],
+        building: true
     };
 };
 const setIngredients = (state, action) => {
@@ -38,7 +41,8 @@ const setIngredients = (state, action) => {
         ...state,
         ingredients: action.ingredients,
         totalPrice: initialState.totalPrice,
-        isError: false
+        isError: false,
+        building: false
     };
 };
 const fetchFailed = state => {

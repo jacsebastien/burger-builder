@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import styles from './Auth.module.css';
 import Button from '../../components/UI/Button/Button';
@@ -40,6 +40,12 @@ const Auth = props => {
         }
     });
     const [isSignup, setSignupState] = useState(false);
+
+    useEffect(() => {
+        if(!props.buildingBurger) {
+            props.onSetAuthRedirect();
+        }
+    }, []);
 
     const checkValidity = (value, rules) => {
         let isValid = true;
@@ -105,7 +111,7 @@ const Auth = props => {
 
     return (
         <div className={styles.authContainer}>
-            {props.isAuth ? <Redirect to='/' /> : null}
+            {props.isAuth ? <Redirect to={props.authRedirectPath} /> : null}
             <h1>{isSignup ? 'SIGNUP' : 'SIGNIN'}</h1>
             {errorMessage}
             <form onSubmit={submitHandler}>
@@ -125,13 +131,16 @@ const mapStateToProps = state => {
     return {
         isLoading: state.auth.loading,
         error: state.auth.error,
-        isAuth: !!state.auth.token
+        isAuth: !!state.auth.token,
+        buildingBurger: state.burgerBuilder.building,
+        authRedirectPath: state.auth.authRedirectPath
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup))
+        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
+        onSetAuthRedirect: () => dispatch(actions.setAuthRedirect('/'))
     };
 };
 
