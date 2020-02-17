@@ -1,47 +1,43 @@
 /* eslint-disable react/display-name */
-import React, { Fragment, Component } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import Modal from '../../components/UI/Modal/Modal';
 
 const withErrorHandler = (WrappedComponent, Axios) => {
     // return anonymous class
-    return class extends Component {
-        state = {
-            error: null
-        };
+    return props => {
+        const [error, setError] = useState(null);
 
-        reqInterceptor = Axios.interceptors.request.use(req => {
-            this.setState({ error: null });
+        const reqInterceptor = Axios.interceptors.request.use(req => {
+            setError(null);
             return req;
         });
 
-        resInterceptor = Axios.interceptors.response.use(res => res, error => {
-            this.setState({ error: error });
+        const resInterceptor = Axios.interceptors.response.use(res => res, err => {
+            setError(err);
         });
 
-        componentWillUnmount() {
-            if(Axios.interceptors.request.request) {
-                Axios.interceptors.request.request.eject(this.reqInterceptor);
-            }
+        useEffect(() => {
+            return () => {
+                if (Axios.interceptors.request.request) {
+                    Axios.interceptors.request.request.eject(reqInterceptor);
+                }
 
-            if(Axios.interceptors.response.request) {
-                Axios.interceptors.response.request.eject(this.resInterceptor);
-            }
-        }
+                if (Axios.interceptors.response.request) {
+                    Axios.interceptors.response.request.eject(resInterceptor);
+                }
+            };
+        }, [reqInterceptor, resInterceptor]);
 
-        errorConfirmedHandler = () => this.setState({ error: null })
+        const errorConfirmedHandler = () => setError(null);
 
-        render() {
-            return (
-                <Fragment>
-                    <Modal
-                        show={this.state.error}
-                        modalClosed={this.errorConfirmedHandler}>
-                        {this.state.error ? this.state.error.message : null}
-                    </Modal>
-                    <WrappedComponent {...this.props} />
-                </Fragment>
-            );
-        }
+        return (
+            <Fragment>
+                <Modal show={error} modalClosed={errorConfirmedHandler}>
+                    {error ? error.message : null}
+                </Modal>
+                <WrappedComponent {...props} />
+            </Fragment>
+        );
     };
 };
 
