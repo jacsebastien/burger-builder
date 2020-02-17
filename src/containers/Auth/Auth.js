@@ -41,11 +41,13 @@ const Auth = props => {
     });
     const [isSignup, setSignupState] = useState(false);
 
+    const { buildingBurger, onSetAuthRedirect } = props;
+
     useEffect(() => {
-        if(!props.buildingBurger) {
-            props.onSetAuthRedirect();
+        if (!buildingBurger) {
+            onSetAuthRedirect();
         }
-    }, []);
+    }, [buildingBurger, onSetAuthRedirect]);
 
     const checkValidity = (value, rules) => {
         let isValid = true;

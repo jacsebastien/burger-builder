@@ -20,9 +20,12 @@ const Auth = React.lazy(() => {
 
 // function App(props) {
 const App = (props) => {
+    // Object destructuring to get only props we need to use
+    const { onCheckAuthState } = props;
+
     useEffect(() => {
-        props.onCheckAuthState();
-    }, []);
+        onCheckAuthState();
+    }, [onCheckAuthState]);
 
     let routes = (
         <Switch>
